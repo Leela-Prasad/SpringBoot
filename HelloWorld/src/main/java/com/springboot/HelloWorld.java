@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HelloWorld {
 
-	public void wish() {
+	public void sayHello() {
 		System.out.println("Hello Spring Boot Application!");
 	}
 }

@@ -10,6 +10,6 @@ public class HelloWorldApplication {
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(HelloWorldApplication.class, args);
 		HelloWorld helloWorld = (HelloWorld)context.getBean("helloWorld");				
-		helloWorld.wish();
+		helloWorld.sayHello();
 	}
 }
