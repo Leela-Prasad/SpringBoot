@@ -1,0 +1,19 @@
+spring.autoconfigure.exclude[0]=org.springframework.boot.autoconfigure.tymeleaf.ThymeleafAutoConfiguration
+spring.autoconfigure.exclude[1]=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+spring.autoconfigure.exclude[2]=org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration
+spring.autoconfigure.exclude[3]=org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+spring.autoconfigure.exclude[3]=org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
+spring.autoconfigure.exclude[3]=org.springframework.boot.autoconfigure.security.SecurityFilterAutoConfiguration
+spring.autoconfigure.exclude[3]=org.springframework.boot.autoconfigure.security.FallbackWebSecurityAutoConfiguration
+spring.autoconfigure.exclude[3]=org.springframework.boot.autoconfigure.aop.AopAutoConfiguration
+
+
+In Run Configuration pass
+--debug to program arguments to see what spring boot is autoconfiguring
+
+Write @EnableWebMVC to exclude spring mvc
+@EnableWebMVC
+@Configuration
+public class SpringWebMVCConfig {
+	
+}
