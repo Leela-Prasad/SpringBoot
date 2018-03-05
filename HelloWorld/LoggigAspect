@@ -1,0 +1,256 @@
+package com.spring.aop.aspects;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+@Aspect
+public class LoggingAspect {
+	
+	/**
+	 * This Advice will run for all the public void draw() methods.
+	 */
+	/*@Before("execution(public void draw())")
+	public void loggingAdvice() {
+		System.out.println("Logging Advice with Before annotation has ran for draw method");
+	}*/
+	
+	
+	/**
+	 * This Advice is specific to the Circle class.
+	 * Here * in the return type and * in the getter refers to zero to many.
+	 */
+	/*@Before("execution(public * com.spring.aop.model.Circle.get*())")
+	public void loggingAdvice() {
+		System.out.println("Logging Advice for a specific class Circle for getters");
+	}*/
+	
+	
+	/**
+	 * Here * in arguments means atleast 1.
+	 */
+	/*@Before("execution(public * com.spring.aop.model.Circle.get*(*))")
+	public void loggingAdvice() {
+		System.out.println("Logging Advice for arguments test(*)");
+	}*/
+	
+	
+	/**
+	 * Here .. in arguments means zero to many 
+	 */
+	/*@Before("execution(public * com.spring.aop.model.Circle.get*(..))")
+	public void loggingAdvice() {
+		System.out.println("Logging Advice for arguments test(..)");
+	}*/
+	
+	
+	/**
+	 * Running One Advice for different methods(points)
+	 * For this we can use wildcards to map to different methods(points)
+	 */
+	/*@Before("execution(public * get*())")
+	public void loggingAdvice() {
+		System.out.println("One Ascept for different points has ran for getter methods");
+	}*/
+	
+	
+	/**
+	 * Running Multiple Advices for single pointcut(point)
+	 */
+	/*@Before("loggingPointcut()")
+	public void loggingAdvice1() {
+		System.out.println("Logging Advice1 ran");
+	}
+	
+	@Before("loggingPointcut()")
+	public void loggingAdvice2() {
+		System.out.println("Logging Advice2 ran");
+	}
+	
+	@Pointcut("execution(public * com.spring.aop.model.Circle.get*(..))")
+	public void loggingPointcut() {}*/
+	
+	
+	/**
+	 *  Running advice for all methods in a class
+	 *  This can be done in two ways 
+	 *  1.By using exeuction(expression)
+	 *    execution(* com.spring.aop.model.Circle.*(..)
+	 *  2. By using within 
+	 *     within(com.spring.aop.model.Circle)
+	 *   Here excution(expression) is generally mentioned for methods.
+	 *   and within() generally mentioned for classes.   
+	 */
+	/*@Before("allCircleMethods()")
+	public void loggingAdvice() {
+		System.out.println("Advice running for all methods in a circle");
+	}
+	
+	@Pointcut("within(com.spring.aop.model.Circle)")
+	public void allCircleMethods() {}*/
+	
+	
+	/**
+	 * combining pointcuts
+	 */
+	
+	/*@Before("allGetters() && allCircleMethods()")
+	public void loggingAdvice() {
+		System.out.println("Advice running for all methods in a circle");
+	}
+	
+	@Pointcut("within(com.spring.aop.model.Circle)")
+	public void allCircleMethods() {}
+	
+	@Pointcut("execution(* get*(..))")
+	public void allGetters() {}*/
+	
+	
+	/**
+	 * JoinPoint is applicable for all the advices
+	 * By using Spring AOP advice will be applicable for the methods
+	 * but for aspectj advice will be applicable for methods,member variables etc.
+	 * 
+	 * By using JoinPoint we can get the name of the method for which we have ran the advice.
+	 * 
+	 */
+	/*@Before("allGetters() && allCircleMethods()")
+	public void loggingAdvice(JoinPoint joinPoint) {
+		System.out.println("Advice ran for : "+joinPoint.toString());
+		System.out.println("Invocation Object :"+joinPoint.getTarget());
+	}
+	
+	@Pointcut("within(com.spring.aop.model.Circle)")
+	public void allCircleMethods() {}
+	
+	@Pointcut("execution(* get*(..))")
+	public void allGetters() {}*/
+	
+	
+	/**
+	 * 
+	 * @param joinPoint
+	 * Advice to run for all methods having String argument.
+	 */
+	/*@Before("args(String)")
+	public void stringArgumentMethodsAdvice(JoinPoint joinPoint) {
+		System.out.println("String argument method advice ran : "+joinPoint.toString());
+	}*/
+	
+	
+	/**
+	 * 
+	 * @param joinPoint
+	 * Advice to run for all methods having String argument and printing the string argument value
+	 */
+	/*@Before("args(name)")
+	public void stringArgumentMethodsAdvice(JoinPoint joinPoint,String name) {
+		System.out.println("String argument method advice ran : "+joinPoint.toString());
+		System.out.println("string name: "+name);
+	}*/
+	
+	
+	/**
+	 * 
+	 * @param name
+	 * 
+	 * This After Annotation will behave as finally in try catch block
+	 * This After Advice will be executed after the specified pointcut expression method called
+	 * This After Advice will be called after normal completion of method or after exception is thrown
+	 * so this will act as finally in try catch block
+	 * *** This After Advice method will not be called during spring bean intialization by the 
+	 * spring container. i.e; if spring container is doing setter injection during bean intializaiton
+	 * this After Advice method will not be called.
+	 */
+	/*@After("args(name)")
+	public void setterArgumentsMethodsAdvice(String name) {
+		System.out.println("After Advice ran!");
+	}*/
+	
+	
+	/**
+	 * 
+	 * @param name
+	 * This AfterReturning advice will be called after execution of the method defined in the 
+	 * pointcut expression.
+	 * This advice will be executed only the method defined in the pointcut expression is 
+	 * executed without any exceptions.
+	 */
+	/*@AfterReturning(pointcut="args(name)",returning="returnValue")
+	public void afterReturnAdvice(String name,String returnValue) {
+		System.out.println("After Return Advice called: "+returnValue);
+	}*/
+	
+	
+	/**
+	 * 
+	 * @param name
+	 * This AfterThrowing Advice will run only when the method defined in the pointcut expression
+	 * throws an exception
+	 */
+	/*@AfterThrowing(pointcut="args(name)",throwing="thrownValue")
+	public void afterThrowingAdvice(String name,RuntimeException thrownValue) {
+		System.out.println("After Throwing Advice ran" +thrownValue);
+	}*/
+	
+	
+	/**
+	 * 
+	 * @param proceedingJoinPoint
+	 * @return
+	 * AroundAdvice will run before and after the execution of target method
+	 * target method will get executed when the following line executed
+	 * proceedingJoinPoint.proceed()
+	 * 
+	 * In this we can get hold of returnValue and modify the object if needed.
+	 * we can also have an option to execute target or not based on the Before advice code.
+	 */
+	/*@Around("allGetters()")
+	public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
+		
+		Object returnValue = null;
+		try {
+			System.out.println("Before Advice");
+			returnValue=proceedingJoinPoint.proceed();
+			System.out.println("After Returning");
+		}catch(Throwable ex) {
+			System.out.println("After Exception");
+		}
+		System.out.println("After Finally");
+		returnValue="leela";
+		return returnValue;
+	}
+	
+	@Pointcut("execution(* get*(..))")
+	public void allGetters() {}*/
+	
+	
+	/**
+	 * 
+	 * @param proceedingJoinPoint
+	 * @return
+	 * 
+	 * Applying Around Advice for custom Annotated methods(Loggable)
+	 */
+	@Around("@annotation(com.spring.aop.annotation.Loggable)")
+	public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) {
+		
+		Object returnValue = null;
+		try {
+			System.out.println("Before Advice");
+			returnValue=proceedingJoinPoint.proceed();
+			System.out.println("After Returning");
+		}catch(Throwable ex) {
+			System.out.println("After Exception");
+		}
+		System.out.println("After Finally");
+		return returnValue;
+	}
+	
+}
